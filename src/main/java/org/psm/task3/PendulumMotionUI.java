@@ -1,4 +1,4 @@
-package org.example.task3;
+package org.psm.task3;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -9,8 +9,6 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.geom.Ellipse2D;
@@ -98,12 +96,7 @@ public class PendulumMotionUI {
         gbc.gridwidth = 3;
         gbc.anchor = GridBagConstraints.CENTER;
         JButton simulateButton = new JButton("Simulate");
-        simulateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                runSimulation();
-            }
-        });
+        simulateButton.addActionListener(_ -> runSimulation());
         panel.add(simulateButton, gbc);
 
         return panel;

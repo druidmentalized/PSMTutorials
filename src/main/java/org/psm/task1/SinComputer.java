@@ -1,4 +1,4 @@
-package org.example.task1;
+package org.psm.task1;
 
 public class SinComputer {
     public static void main(String[] args) {

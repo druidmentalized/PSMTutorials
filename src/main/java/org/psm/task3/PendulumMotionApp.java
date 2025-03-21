@@ -1,4 +1,4 @@
-package org.example.task3;
+package org.psm.task3;
 
 import javax.swing.SwingUtilities;
 

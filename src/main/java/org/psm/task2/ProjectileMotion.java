@@ -1,4 +1,4 @@
-package org.example.task2;
+package org.psm.task2;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
