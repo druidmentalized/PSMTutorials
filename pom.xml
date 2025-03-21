@@ -33,7 +33,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.example.Task2.ProjectileMotion</mainClass>
+                            <mainClass>org.example.task2.ProjectileMotion</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -1,4 +1,4 @@
-package org.example.Task1;
+package org.example.task1;
 
 public class SinComputer {
     public static void main(String[] args) {
