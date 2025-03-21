@@ -7,27 +7,27 @@ public class Pendulum {
     // Constants
     private static double g = 10;
 
-    //basic data
+    // Basic data
     double mass;
     double length;
-
 
     // Angles
     private double alpha;
     private double omega;
+    private final double initAlpha;
+    private final double initOmega = 0;
 
-    private double initAlpha;
-    private double initOmega = 0;
-
-    // Position
-    private double x;
-    private double y;
-    private double height;
+    //Series
+    private final XYSeries heunMotionSeriesEp = new XYSeries("Ep");
+    private final XYSeries heunMotionSeriesEk = new XYSeries("Ek");
+    private final XYSeries RK4MotionSeriesEp = new XYSeries("Ep");
+    private final XYSeries RK4MotionSeriesEk = new XYSeries("Ek");
+    private final XYSeries heunOmegaSeries = new XYSeries("Omega");
+    private final XYSeries RK4OmegaSeries = new XYSeries("Omega");
 
     public Pendulum(double mass, double length, double angleDegrees) {
         this.mass = mass;
         this.length = length;
-
 
         initAlpha = Math.toRadians(angleDegrees);
 
@@ -35,35 +35,24 @@ public class Pendulum {
         omega = initOmega;
     }
 
-    public XYSeriesCollection simulateHeunMotion(double time, double timeStep) {
+    public void simulateHeunMotion(double time, double timeStep) {
         resetStates();
-
-        XYSeries EpSeries = new XYSeries("Ep");
-        XYSeries EkSeries = new XYSeries("Ek");
-
 
         double currentTime = 0;
         for (int i = 0; i < time / timeStep; i++) {
-            // Record energies at the current state
             double[] energies = recomputeEnergies();
-            EpSeries.add(currentTime, energies[0]);
-            EkSeries.add(currentTime, energies[1]);
+            heunMotionSeriesEp.add(currentTime, energies[0]);
+            heunMotionSeriesEk.add(currentTime, energies[1]);
 
-            // Advance one time step using Heun's method
             recomputeHeunDegrees(timeStep);
 
-            // Increment time
             currentTime += timeStep;
         }
-
-        // Put both series into a dataset
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(EpSeries);
-        dataset.addSeries(EkSeries);
-        return dataset;
     }
 
     private void recomputeHeunDegrees(double timeStep) {
+        heunOmegaSeries.add(alpha, omega);
+
         double alpha_old = alpha;
         double omega_old = omega;
 
@@ -78,57 +67,46 @@ public class Pendulum {
         omega = omega_old + 0.5 * timeStep * (k1_omega + k2_omega);
     }
 
-    public XYSeriesCollection simulateRK4Motion(double time, double timeStep) {
+    public void simulateRK4Motion(double time, double timeStep) {
         resetStates();
-
-        XYSeries EpSeries = new XYSeries("Ep");
-        XYSeries EkSeries = new XYSeries("Ek");
 
         double currentTime = 0;
         for (int i = 0; i < time / timeStep; i++) {
             double[] energies = recomputeEnergies();
-            EpSeries.add(currentTime, energies[0]);
-            EkSeries.add(currentTime, energies[1]);
+            RK4MotionSeriesEp.add(currentTime, energies[0]);
+            RK4MotionSeriesEk.add(currentTime, energies[1]);
 
             rk4Step(timeStep);
 
             currentTime += timeStep;
         }
-
-        XYSeriesCollection dataset = new XYSeriesCollection();
-        dataset.addSeries(EpSeries);
-        dataset.addSeries(EkSeries);
-        return dataset;
     }
 
     private void rk4Step(double dt) {
+        RK4OmegaSeries.add(alpha, omega);
+
         double alpha_n = alpha;
         double omega_n = omega;
 
         // k1
-        double k1_alpha = omega_n;
-        double k1_omega = - (g / length) * Math.sin(alpha_n);
+        double k1_omega = -(g / length) * Math.sin(alpha_n);
 
         // k2
-        double alpha_k2 = alpha_n + 0.5 * dt * k1_alpha;
-        double omega_k2 = omega_n + 0.5 * dt * k1_omega;
-        double k2_alpha = omega_k2;
-        double k2_omega = - (g / length) * Math.sin(alpha_k2);
+        double alpha_k2 = alpha_n + 0.5 * dt * omega_n;
+        double k2_alpha = omega_n + 0.5 * dt * k1_omega;
+        double k2_omega = -(g / length) * Math.sin(alpha_k2);
 
         // k3
         double alpha_k3 = alpha_n + 0.5 * dt * k2_alpha;
-        double omega_k3 = omega_n + 0.5 * dt * k2_omega;
-        double k3_alpha = omega_k3;
-        double k3_omega = - (g / length) * Math.sin(alpha_k3);
+        double k3_alpha = omega_n + 0.5 * dt * k2_omega;
+        double k3_omega = -(g / length) * Math.sin(alpha_k3);
 
         // k4
         double alpha_k4 = alpha_n + dt * k3_alpha;
-        double omega_k4 = omega_n + dt * k3_omega;
-        double k4_alpha = omega_k4;
-        double k4_omega = - (g / length) * Math.sin(alpha_k4);
+        double k4_alpha = omega_n + dt * k3_omega;
+        double k4_omega = -(g / length) * Math.sin(alpha_k4);
 
-        // Combine
-        alpha = alpha_n + (dt / 6.0) * (k1_alpha + 2*k2_alpha + 2*k3_alpha + k4_alpha);
+        alpha = alpha_n + (dt / 6.0) * (omega_n + 2*k2_alpha + 2*k3_alpha + k4_alpha);
         omega = omega_n + (dt / 6.0) * (k1_omega + 2*k2_omega + 2*k3_omega + k4_omega);
     }
 
@@ -136,10 +114,9 @@ public class Pendulum {
         double Ek;
         double Ep;
 
-        x = length * Math.cos(alpha - Math.toRadians(90));
-        y = length * Math.sin(alpha - Math.toRadians(90));
+        double y = length * Math.sin(alpha - Math.toRadians(90));
 
-        height = length + y;
+        double height = length + y;
 
         Ep = mass * Math.abs(g) * height;
         Ek = mass * Math.pow((omega * length), 2) / 2;
@@ -150,5 +127,29 @@ public class Pendulum {
     private void resetStates() {
         alpha = initAlpha;
         omega = initOmega;
+    }
+
+    public XYSeries getHeunMotionSeriesEp() {
+        return heunMotionSeriesEp;
+    }
+
+    public XYSeries getHeunMotionSeriesEk() {
+        return heunMotionSeriesEk;
+    }
+
+    public XYSeries getRK4MotionSeriesEp() {
+        return RK4MotionSeriesEp;
+    }
+
+    public XYSeries getRK4MotionSeriesEk() {
+        return RK4MotionSeriesEk;
+    }
+
+    public XYSeries getHeunOmegaSeries() {
+        return heunOmegaSeries;
+    }
+
+    public XYSeries getRK4OmegaSeries() {
+        return RK4OmegaSeries;
     }
 }
