@@ -45,11 +45,12 @@ public class PendulumMotionUI {
         gbc.fill = GridBagConstraints.BOTH;
 
         // Create input panel and add it to window
-        JPanel inputPanel = createInputPanel();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 0.1;
+        JPanel inputPanel = createInputPanel();
+
         window.add(inputPanel, gbc);
 
         // Create charts panel and add it to window
