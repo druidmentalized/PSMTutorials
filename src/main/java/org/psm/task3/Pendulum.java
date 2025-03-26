@@ -16,8 +16,10 @@ public class Pendulum {
     // Data series for simulation results
     private final XYSeries heunMotionSeriesEp = new XYSeries("Ep");
     private final XYSeries heunMotionSeriesEk = new XYSeries("Ek");
+    private final XYSeries heunMotionSeriesEt = new XYSeries("Et");
     private final XYSeries rk4MotionSeriesEp = new XYSeries("Ep");
     private final XYSeries rk4MotionSeriesEk = new XYSeries("Ek");
+    private final XYSeries rk4MotionSeriesEt = new XYSeries("Et");
     private final XYSeries heunOmegaSeries = new XYSeries("Omega");
     private final XYSeries rk4OmegaSeries = new XYSeries("Omega");
 
@@ -41,6 +43,7 @@ public class Pendulum {
             double[] energies = computeEnergies();
             heunMotionSeriesEp.add(currentTime, energies[0]);
             heunMotionSeriesEk.add(currentTime, energies[1]);
+            heunMotionSeriesEt.add(currentTime, energies[0] + energies[1]);
 
             heunOmegaSeries.add(alpha, omega);
             heunStep(timeStep);
@@ -70,6 +73,7 @@ public class Pendulum {
             double[] energies = computeEnergies();
             rk4MotionSeriesEp.add(currentTime, energies[0]);
             rk4MotionSeriesEk.add(currentTime, energies[1]);
+            rk4MotionSeriesEt.add(currentTime, energies[0] + energies[1]);
 
             rk4OmegaSeries.add(alpha, omega);
             rk4Step(timeStep);
@@ -115,8 +119,10 @@ public class Pendulum {
     // Getters for the data series
     public XYSeries getHeunMotionSeriesEp() { return heunMotionSeriesEp; }
     public XYSeries getHeunMotionSeriesEk() { return heunMotionSeriesEk; }
+    public XYSeries getHeunMotionSeriesEt() { return heunMotionSeriesEt; }
     public XYSeries getRK4MotionSeriesEp() { return rk4MotionSeriesEp; }
     public XYSeries getRK4MotionSeriesEk() { return rk4MotionSeriesEk; }
+    public XYSeries getRK4MotionSeriesEt() { return rk4MotionSeriesEt; }
     public XYSeries getHeunOmegaSeries() { return heunOmegaSeries; }
     public XYSeries getRK4OmegaSeries() { return rk4OmegaSeries; }
 }

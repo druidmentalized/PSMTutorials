@@ -15,11 +15,13 @@ public class PendulumSimulator {
         pendulum.simulateHeunMotion(totalTime, timeStep);
         heunMotionDataset.addSeries(pendulum.getHeunMotionSeriesEp());
         heunMotionDataset.addSeries(pendulum.getHeunMotionSeriesEk());
+        heunMotionDataset.addSeries(pendulum.getHeunMotionSeriesEt());
         heunOmegaDataset.addSeries(pendulum.getHeunOmegaSeries());
 
         pendulum.simulateRK4Motion(totalTime, timeStep);
         rk4MotionDataset.addSeries(pendulum.getRK4MotionSeriesEp());
         rk4MotionDataset.addSeries(pendulum.getRK4MotionSeriesEk());
+        rk4MotionDataset.addSeries(pendulum.getRK4MotionSeriesEt());
         rk4OmegaDataset.addSeries(pendulum.getRK4OmegaSeries());
 
         return new SimulationResult(heunMotionDataset, heunOmegaDataset, rk4MotionDataset, rk4OmegaDataset);
