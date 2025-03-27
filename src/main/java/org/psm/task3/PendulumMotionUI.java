@@ -148,8 +148,8 @@ public class PendulumMotionUI {
         // Create Heun Motion Chart
         JFreeChart heunMotionChart = ChartFactory.createXYLineChart(
                 "Pendulum Heun's Energies Motion",
-                "Time",
-                "Energies",
+                "t, s",
+                "A, J",
                 heunMotionDataset,
                 PlotOrientation.VERTICAL,
                 true,

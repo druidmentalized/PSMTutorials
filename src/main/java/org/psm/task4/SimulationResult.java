@@ -3,18 +3,18 @@ package org.psm.task4;
 import org.jfree.data.xy.XYSeriesCollection;
 
 public class SimulationResult {
+    private final XYSeriesCollection motionTrajectories;
     private final XYSeriesCollection energies;
-    private final XYSeriesCollection rollingResults;
 
-    public SimulationResult(XYSeriesCollection energies, XYSeriesCollection rollingResults) {
+    public SimulationResult(XYSeriesCollection motionTrajectories, XYSeriesCollection energies) {
         this.energies = energies;
-        this.rollingResults = rollingResults;
+        this.motionTrajectories = motionTrajectories;
     }
 
     public XYSeriesCollection getEnergies() {
         return energies;
     }
-    public XYSeriesCollection getRollingResults() {
-        return rollingResults;
+    public XYSeriesCollection getMotionTrajectories() {
+        return motionTrajectories;
     }
 }

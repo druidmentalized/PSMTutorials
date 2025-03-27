@@ -27,16 +27,16 @@ public class Pendulum {
         this.mass = mass;
         this.length = length;
         this.initAlpha = Math.toRadians(angleDegrees);
-        resetStates();
+        resetValues();
     }
 
-    private void resetStates() {
+    private void resetValues() {
         alpha = initAlpha;
         omega = 0.0;
     }
 
     public void simulateHeunMotion(double totalTime, double timeStep) {
-        resetStates();
+        resetValues();
         double currentTime = 0;
         int steps = (int)(totalTime / timeStep);
         for (int i = 0; i < steps; i++) {
@@ -66,7 +66,7 @@ public class Pendulum {
     }
 
     public void simulateRK4Motion(double totalTime, double timeStep) {
-        resetStates();
+        resetValues();
         double currentTime = 0;
         int steps = (int)(totalTime / timeStep);
         for (int i = 0; i < steps; i++) {

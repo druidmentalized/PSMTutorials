@@ -1,13 +1,17 @@
 package org.psm.task4;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-
-import static org.psm.task3.PendulumSimulator.runSimulation;
+import java.awt.geom.Ellipse2D;
 
 public class RollingObjectUI {
     private JFrame window;
@@ -17,14 +21,16 @@ public class RollingObjectUI {
     private JTextField heightField;
     private JTextField radiusField;
     private JTextField angleField;
-    private JTextField timeField;
     private JTextField timeStepField;
 
     // Chart datasets
-    //todo: create them later
+    private final XYSeriesCollection motionTrajectoriesDataset = new XYSeriesCollection();
+    private final XYSeriesCollection energiesDataset = new XYSeriesCollection();
+
 
     // Chart panels
-    //todo make them later
+    private ChartPanel motionTrajectoriesChartPanel;
+    private ChartPanel energiesChartPanel;
 
     public void createAndShowGUI() {
         window = new JFrame("Rolling Object");
@@ -61,7 +67,6 @@ public class RollingObjectUI {
         heightField = createTextField("Height");
         radiusField = createTextField("Radius");
         angleField = createTextField("Angle (°)");
-        timeField = createTextField("Time");
         timeStepField = createTextField("Time Step");
 
         gbc.gridx = 0;
@@ -78,17 +83,13 @@ public class RollingObjectUI {
         gbc.gridy = 1;
         inputPanel.add(createLabeledField("Angle:", angleField), gbc);
 
-        gbc.gridx = 1;
-        inputPanel.add(createLabeledField("Time:", timeField), gbc);
-
         gbc.gridx = 2;
         inputPanel.add(createLabeledField("Time Step:", timeStepField), gbc);
 
         // Simulate button
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 3;
+        gbc.gridx = 1;
         gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
         JButton simulateButton = new JButton("Simulate");
         simulateButton.addActionListener(_ -> runSimulation());
         inputPanel.add(simulateButton, gbc);
@@ -98,7 +99,46 @@ public class RollingObjectUI {
 
     private JPanel createChartsPanel() {
         JPanel chartsPanel = new JPanel(new GridBagLayout());
-        //todo make later
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+
+
+        //Creating motions trajectories chart
+        JFreeChart trajectoriesChart = ChartFactory.createXYLineChart(
+                "Rolling Object Motion Trajectories",
+                "x",
+                "y",
+                motionTrajectoriesDataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
+        );
+        trajectoriesChart.getXYPlot().setRenderer(createMotionRenderer());
+        motionTrajectoriesChartPanel = new ChartPanel(trajectoriesChart);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        chartsPanel.add(motionTrajectoriesChartPanel, gbc);
+
+        //Creating energies chart
+        JFreeChart energiesChart = ChartFactory.createXYLineChart(
+                "Rolling Object Energies",
+                "Time",
+                "Energies",
+                energiesDataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
+        );
+        energiesChart.getXYPlot().setRenderer(createEnergyRenderer());
+        energiesChartPanel = new ChartPanel(energiesChart);
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        chartsPanel.add(energiesChartPanel, gbc);
+
         return chartsPanel;
     }
 
@@ -108,12 +148,15 @@ public class RollingObjectUI {
             double height = Double.parseDouble(heightField.getText());
             double radius = Double.parseDouble(radiusField.getText());
             double angle = Double.parseDouble(angleField.getText());
-            double time = Double.parseDouble(timeField.getText());
             double timeStep = Double.parseDouble(timeStepField.getText());
 
-            SimulationResult result = RollingSimulator.runSimulation(mass, height, radius, angle, time, timeStep);
+            SimulationResult result = RollingSimulator.runSimulation(mass, height, radius, angle, timeStep);
 
-            //todo make dataset painting
+            updateDataset(motionTrajectoriesDataset, result.getMotionTrajectories());
+            updateDataset(energiesDataset, result.getEnergies());
+
+            motionTrajectoriesChartPanel.repaint();
+            energiesChartPanel.repaint();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(window, "Invalid input! Please enter numeric values.", "Input Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -160,5 +203,38 @@ public class RollingObjectUI {
         for (int i = 0; i < source.getSeriesCount(); i++) {
             target.addSeries(source.getSeries(i));
         }
+    }
+
+    private XYLineAndShapeRenderer createMotionRenderer() {
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        renderer.setSeriesLinesVisible(0, true);
+        renderer.setSeriesShapesVisible(0, false);
+        renderer.setSeriesStroke(0, new BasicStroke(3.0f));
+
+        renderer.setSeriesLinesVisible(1, false);
+        renderer.setSeriesShapesVisible(1, true);
+        renderer.setSeriesShape(1, new Ellipse2D.Double(-1, -1, 3, 3));
+
+        renderer.setSeriesLinesVisible(2, false);
+        renderer.setSeriesShapesVisible(2, true);
+        renderer.setSeriesShape(3, new Ellipse2D.Double(-2, -2, 4, 4));
+
+        renderer.setSeriesLinesVisible(3, false);
+        renderer.setSeriesShapesVisible(3, true);
+        renderer.setSeriesShape(3, new Ellipse2D.Double(-2, -2, 4, 4));
+        return renderer;
+    }
+
+    private XYLineAndShapeRenderer createEnergyRenderer() {
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        renderer.setSeriesStroke(0, new BasicStroke(3.0f));
+        renderer.setSeriesShapesVisible(0, false);
+
+        renderer.setSeriesStroke(1, new BasicStroke(3.0f));
+        renderer.setSeriesShapesVisible(1, false);
+
+        renderer.setSeriesStroke(2, new BasicStroke(3.0f));
+        renderer.setSeriesShapesVisible(2, false);
+        return renderer;
     }
 }
