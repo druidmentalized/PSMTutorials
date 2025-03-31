@@ -4,11 +4,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class RollingSimulator {
     public static SimulationResult runSimulation(double mass, double height, double radius,
-                                                 double angleDegrees, double timeStep) {
+                                                 double angleDegrees, double inertiaFactor, double timeStep) {
         XYSeriesCollection trajectoriesDataset = new XYSeriesCollection();
         XYSeriesCollection energiesDataset = new XYSeriesCollection();
 
-        RollingObject rollingObject = new RollingObject(mass, height, radius, angleDegrees, 3.6);
+        RollingObject rollingObject = new RollingObject(mass, height, radius, angleDegrees, inertiaFactor);
 
         rollingObject.simulate(timeStep);
         trajectoriesDataset.addSeries(rollingObject.getInclinedSurfaceSeries());

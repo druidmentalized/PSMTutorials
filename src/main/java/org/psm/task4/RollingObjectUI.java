@@ -21,6 +21,7 @@ public class RollingObjectUI {
     private JTextField heightField;
     private JTextField radiusField;
     private JTextField angleField;
+    private JTextField inertiaFactorField;
     private JTextField timeStepField;
 
     // Chart datasets
@@ -67,6 +68,7 @@ public class RollingObjectUI {
         heightField = createTextField("Height");
         radiusField = createTextField("Radius");
         angleField = createTextField("Angle (°)");
+        inertiaFactorField = createTextField("Inertia");
         timeStepField = createTextField("Time Step");
 
         gbc.gridx = 0;
@@ -83,11 +85,16 @@ public class RollingObjectUI {
         gbc.gridy = 1;
         inputPanel.add(createLabeledField("Angle:", angleField), gbc);
 
+        gbc.gridx = 1;
+        inputPanel.add(createLabeledField("Inertia:", inertiaFactorField), gbc);
+
         gbc.gridx = 2;
         inputPanel.add(createLabeledField("Time Step:", timeStepField), gbc);
 
         // Simulate button
-        gbc.gridx = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 3;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         JButton simulateButton = new JButton("Simulate");
@@ -148,9 +155,10 @@ public class RollingObjectUI {
             double height = Double.parseDouble(heightField.getText());
             double radius = Double.parseDouble(radiusField.getText());
             double angle = Double.parseDouble(angleField.getText());
+            double inertiaFactor = Double.parseDouble(inertiaFactorField.getText());
             double timeStep = Double.parseDouble(timeStepField.getText());
 
-            SimulationResult result = RollingSimulator.runSimulation(mass, height, radius, angle, timeStep);
+            SimulationResult result = RollingSimulator.runSimulation(mass, height, radius, angle, inertiaFactor, timeStep);
 
             updateDataset(motionTrajectoriesDataset, result.getMotionTrajectories());
             updateDataset(energiesDataset, result.getEnergies());
