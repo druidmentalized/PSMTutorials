@@ -14,6 +14,9 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
 - `task2/` – Projectile motion simulation using Euler and MidPoint methods.
 - `task3/` – Pendulum motion simulation using Improved Euler (Heun) and RK4 methods, including energy conservation analysis.
 - `task4/` - Rolling object motion simulation using MidPoint method, which allows for different inertia objects calculations. 
+- `task5/` - Moon–Earth–Sun orbital simulation using MidPoint method.
+  Models Earth’s orbit around the Sun and the Moon’s local orbit around Earth,
+  combining them to show realistic lunar motion.
 
 ---
 
@@ -51,6 +54,15 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
   - **Potential, kinetic (translational + rotational), and total energies**  
   Uses `JFreeChart` to plot all spatial and energetic data**
 
+- **Task 5**:
+    Simulates the Moon–Earth–Sun orbital system using the Midpoint method.
+    Models:
+    - **Earth’s orbit around the Sun using Newtonian gravity**
+    - **Moon’s local orbit around Earth, treated as a two-body system**
+    Combines both to produce a realistic lunar trajectory in global coordinates and outputs:
+    - **Earth and Moon orbits**
+    - **Fixed Sun position**
+    Uses `JFreeChart` for clear spatial visualization.
 ---
 
 ## 🛠️ Requirements
