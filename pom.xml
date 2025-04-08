@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.psm</groupId>
-    <artifactId>task4</artifactId>
+    <artifactId>task5</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -51,7 +51,7 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>org.psm.task4.RollingObjectApp</mainClass>
+                                    <mainClass>org.psm.task5.MoonEarthApp</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
