@@ -1,4 +1,7 @@
 package org.psm.task6;
 
-public class SimulationResult {
+import org.jfree.data.xy.XYSeriesCollection;
+
+public record SimulationResult(XYSeriesCollection shapeDataset, XYSeriesCollection energyDataset) {
+
 }
