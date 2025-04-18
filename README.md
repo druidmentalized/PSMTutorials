@@ -17,6 +17,9 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
 - `task5/` - Moon–Earth–Sun orbital simulation using MidPoint method.
   Models Earth’s orbit around the Sun and the Moon’s local orbit around Earth,
   combining them to show realistic lunar motion.
+- `task6/` – String oscillation simulation using the MidPoint method. Models wave propagation on a discretized string
+  fixed at both ends, computes displacement and velocity updates over time, and visualizes shape evolution and energy 
+  conservation.
 
 ---
 
@@ -55,14 +58,24 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
   Uses `JFreeChart` to plot all spatial and energetic data**
 
 - **Task 5**:
-    Simulates the Moon–Earth–Sun orbital system using the Midpoint method.
+    Simulates the Moon–Earth–Sun orbital system using the Midpoint method.  
     Models:
     - **Earth’s orbit around the Sun using Newtonian gravity**
     - **Moon’s local orbit around Earth, treated as a two-body system**
     Combines both to produce a realistic lunar trajectory in global coordinates and outputs:
     - **Earth and Moon orbits**
-    - **Fixed Sun position**
+    - **Fixed Sun position**  
     Uses `JFreeChart` for clear spatial visualization.
+- **Task 6**:
+     Simulates transverse oscillations of a discrete string using the Midpoint method.  
+     Models:
+     -	**Wave propagation on a string fixed at both ends**
+     -	**Midpoint integration for both displacement and velocity**
+     -	**Finite difference approximation for the second spatial derivative**
+     Computes and visualizes:  
+     - **String shape at multiple time snapshots**
+     - **Kinetic, potential, and total mechanical energy over time**  
+     Uses `JFreeChart` to plot the string’s spatial deformation and energy evolution.
 ---
 
 ## 🛠️ Requirements
