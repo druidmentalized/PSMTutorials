@@ -13,22 +13,22 @@ public class StringUI {
     public void createAndShowGUI() {
         SimulationResult result =
                 StringSimulator.runSimulation(
-                        10,      // N segments
-                        Math.PI, // L
-                        0.01,    // dt
-                        10       // total T
+                        10,
+                        Math.PI,
+                        0.01,
+                        10
                 );
 
         XYSeriesCollection shapeData  = result.shapeDataset();
         XYSeriesCollection energyData = result.energyDataset();
 
         JFreeChart shapeChart = ChartFactory.createXYLineChart(
-                "String Shape vs x", "x", "y",
+                "String Shape(x)", "x", "y",
                 shapeData, PlotOrientation.VERTICAL,
                 true,false,false
         );
         JFreeChart energyChart = ChartFactory.createXYLineChart(
-                "String Energy vs t", "t", "Energy",
+                "String Energy(t)", "t", "Energy",
                 energyData, PlotOrientation.VERTICAL,
                 true,false,false
         );
