@@ -51,7 +51,7 @@ public class UI {
         navPanel.add(nextBtn, BorderLayout.EAST);
         navPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
-        JFrame frame = new JFrame("Lorenz Attractor Viewer");
+        JFrame frame = new JFrame("Lab8");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
         frame.add(cardPanel, BorderLayout.CENTER);
