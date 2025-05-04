@@ -15,19 +15,17 @@ import java.awt.geom.Ellipse2D;
 
 public class PendulumMotionUI {
 
+    // Chart datasets
+    private final XYSeriesCollection heunMotionDataset = new XYSeriesCollection();
+    private final XYSeriesCollection heunOmegaDataset = new XYSeriesCollection();
+    private final XYSeriesCollection rk4MotionDataset = new XYSeriesCollection();
+    private final XYSeriesCollection rk4OmegaDataset = new XYSeriesCollection();
     private JFrame window;
     private JTextField massField;
     private JTextField lengthField;
     private JTextField angleField;
     private JTextField timeField;
     private JTextField timeStepField;
-
-    // Chart datasets
-    private final XYSeriesCollection heunMotionDataset = new XYSeriesCollection();
-    private final XYSeriesCollection heunOmegaDataset = new XYSeriesCollection();
-    private final XYSeriesCollection rk4MotionDataset = new XYSeriesCollection();
-    private final XYSeriesCollection rk4OmegaDataset = new XYSeriesCollection();
-
     // Chart panels
     private ChartPanel heunMotionChartPanel;
     private ChartPanel heunOmegaChartPanel;
@@ -65,7 +63,7 @@ public class PendulumMotionUI {
     private JPanel createInputPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10,10,10,10);
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         massField = createTextField("Mass");

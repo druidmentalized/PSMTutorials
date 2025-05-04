@@ -10,7 +10,7 @@ public class MoonEarthSimulator {
 
     private static final double YEAR_SEC = 3.15576e7;
     private static final double DT = 3600;
-    private static final int STEPS = (int)(YEAR_SEC / DT);
+    private static final int STEPS = (int) (YEAR_SEC / DT);
 
     private static final double GRAVITY_CONSTANT = 6.6743e-11;
     private static final double SUN_MASS = 1.989e+30;
@@ -134,7 +134,7 @@ public class MoonEarthSimulator {
         double ax = (dx / r) * (force / EARTH_MASS);
         double ay = (dy / r) * (force / EARTH_MASS);
 
-        return new double[]{ ax, ay };
+        return new double[]{ax, ay};
     }
 
     private static double[] accelLocalEarthMoon(double dx, double dy, double rEM) {
@@ -142,6 +142,6 @@ public class MoonEarthSimulator {
         double ax = (dx / rEM) * (force / MOON_MASS);
         double ay = (dy / rEM) * (force / MOON_MASS);
 
-        return new double[]{ ax, ay };
+        return new double[]{ax, ay};
     }
 }

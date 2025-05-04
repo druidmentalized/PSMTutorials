@@ -1,6 +1,6 @@
 package org.psm.task3;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 public class PendulumMotionApp {
     public static void main(String[] args) {

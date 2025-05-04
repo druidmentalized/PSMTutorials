@@ -14,8 +14,10 @@ import java.awt.event.FocusListener;
 import java.awt.geom.Ellipse2D;
 
 public class RollingObjectUI {
+    // Chart datasets
+    private final XYSeriesCollection motionTrajectoriesDataset = new XYSeriesCollection();
+    private final XYSeriesCollection energiesDataset = new XYSeriesCollection();
     private JFrame window;
-
     // Text fields
     private JTextField massField;
     private JTextField heightField;
@@ -23,12 +25,6 @@ public class RollingObjectUI {
     private JTextField angleField;
     private JTextField inertiaFactorField;
     private JTextField timeStepField;
-
-    // Chart datasets
-    private final XYSeriesCollection motionTrajectoriesDataset = new XYSeriesCollection();
-    private final XYSeriesCollection energiesDataset = new XYSeriesCollection();
-
-
     // Chart panels
     private ChartPanel motionTrajectoriesChartPanel;
     private ChartPanel energiesChartPanel;

@@ -13,17 +13,9 @@ public class RollingObject {
 
     // Plane length from top to bottom
     private final double planeLength;
-
-    // State variables for Euler integration
-    private double s;
-    private double v;
-    private double beta;
-    private double omega;
-
     // Constant acceleration
     private final double a;
     private final double epsilon;
-
     // Output series
     private final XYSeries inclinedSurfaceSeries = new XYSeries("Incline Surface");
     private final XYSeries ballProjectionSeries = new XYSeries("Ball Projection");
@@ -32,6 +24,11 @@ public class RollingObject {
     private final XYSeries epSeries = new XYSeries("Ep");
     private final XYSeries ekSeries = new XYSeries("Ek");
     private final XYSeries etSeries = new XYSeries("Et");
+    // State variables for Euler integration
+    private double s;
+    private double v;
+    private double beta;
+    private double omega;
 
     public RollingObject(double mass, double height, double radius,
                          double angleDeg, double inertiaFactor) {

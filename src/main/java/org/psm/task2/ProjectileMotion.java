@@ -13,8 +13,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 public class ProjectileMotion {
-    private final static double g   = 9.81;
-
+    private final static double g = 9.81;
+    private static final XYSeriesCollection dataset = new XYSeriesCollection();
     private static JTextArea sxTextArea;
     private static JTextArea syTextArea;
     private static JTextArea vxTextArea;
@@ -22,8 +22,6 @@ public class ProjectileMotion {
     private static JTextArea massTextArea;
     private static JTextArea dragCoefficientTextArea;
     private static JTextArea timeStepTextArea;
-
-    private static final XYSeriesCollection dataset = new XYSeriesCollection();
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(ProjectileMotion::createAndShowGUI);

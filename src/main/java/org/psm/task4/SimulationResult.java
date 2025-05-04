@@ -14,6 +14,7 @@ public class SimulationResult {
     public XYSeriesCollection getEnergies() {
         return energies;
     }
+
     public XYSeriesCollection getMotionTrajectories() {
         return motionTrajectories;
     }

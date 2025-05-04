@@ -19,12 +19,15 @@ public class SimulationResult {
     public XYSeriesCollection getHeunMotionDataset() {
         return heunMotionDataset;
     }
+
     public XYSeriesCollection getHeunOmegaDataset() {
         return heunOmegaDataset;
     }
+
     public XYSeriesCollection getRK4MotionDataset() {
         return rk4MotionDataset;
     }
+
     public XYSeriesCollection getRk4OmegaDataset() {
         return rk4OmegaDataset;
     }

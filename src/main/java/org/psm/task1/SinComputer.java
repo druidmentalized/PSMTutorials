@@ -2,7 +2,7 @@ package org.psm.task1;
 
 public class SinComputer {
     public static void main(String[] args) {
-        computeSin(360,true);
+        computeSin(360, true);
     }
 
     public static void computeSin(double angle, boolean angleInRadians) {
