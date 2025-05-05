@@ -20,6 +20,8 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
 - `task6/` – String oscillation simulation using the MidPoint method. Models wave propagation on a discretized string
   fixed at both ends, computes displacement and velocity updates over time, and visualizes shape evolution and energy 
   conservation.
+- `task7/` – Stationary heat distribution on a square plate using the finite difference method.
+  Solves a 2D Laplace equation using linear system formulation and LU decomposition to compute the temperature profile given fixed edge temperatures.
 
 ---
 
@@ -76,6 +78,15 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
      - **String shape at multiple time snapshots**
      - **Kinetic, potential, and total mechanical energy over time**  
      Uses `JFreeChart` to plot the string’s spatial deformation and energy evolution.
+- **Task7**:
+  Solves the 2D Laplace equation for steady-state heat distribution over a square plate using:
+  - **Finite difference discretization**
+  - **Matrix system formulation (A·x = b)**
+  - **LU decomposition with Apache Commons Math**  
+  Computes and visualizes:
+  - **Temperature distribution inside the plate**
+  - **Color-mapped heatmap via `JFreeChart`**  
+  Fixed temperatures are applied on all four edges, and the system is solved efficiently using linear algebra tools.
 ---
 
 ## 🛠️ Requirements
@@ -85,6 +96,7 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
 - GUI-capable system (Swing is used for visualization)
 - Dependencies:
     - [JFreeChart 1.5.5](https://github.com/jfree/jfreechart)
+    - [Apache Commons Math 3.6.1](https://github.com/apache/commons-math)
 
 ---
 
