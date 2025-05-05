@@ -9,10 +9,10 @@ public class PlateSimulator {
         double[][] T = new double[size][size];
 
         for (int i = 0; i < size; i++) {
-            T[i][0] = 300;
-            T[i][size - 1] = -300;
-            T[0][i] = -200;
-            T[size - 1][i] = 200;
+            T[i][0] = 200;
+            T[i][size - 1] = 150;
+            T[0][i] = 100;
+            T[size - 1][i] = 50;
         }
 
         while (true) {

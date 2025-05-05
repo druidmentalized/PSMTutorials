@@ -30,10 +30,10 @@ public class PlateUI {
         renderer.setBlockWidth(1);
         renderer.setBlockHeight(1);
 
-        LookupPaintScale scale = new LookupPaintScale(-300, 300, Color.BLACK);
+        LookupPaintScale scale = new LookupPaintScale(50, 200, Color.BLACK);
         for (int i = 0; i <= 100; i++) {
             float hue = 0.7f - 0.7f * i / 100f;
-            double v = -300 + i * 6.0;
+            double v = 50 + i * (150.0 / 100.0);
             scale.add(v, Color.getHSBColor(hue, 1f, 1f));
         }
         renderer.setPaintScale(scale);
@@ -48,7 +48,7 @@ public class PlateUI {
         chart.setPadding(new RectangleInsets(0, 0, 0, 0));
 
         NumberAxis scaleAxis = new NumberAxis("Temperature");
-        scaleAxis.setRange(-300, 300);
+        scaleAxis.setRange(50, 200);
         scaleAxis.setTickUnit(new NumberTickUnit(50));
         PaintScaleLegend legend = new PaintScaleLegend(scale, scaleAxis);
         legend.setPosition(RectangleEdge.RIGHT);
