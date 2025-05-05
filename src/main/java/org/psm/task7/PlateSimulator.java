@@ -67,8 +67,8 @@ public class PlateSimulator {
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 int k = i * N + j;
-                xCoord[k] = i + 1;
-                yCoord[k] = j + 1;
+                xCoord[k] = j + 1;
+                yCoord[k] = N - i;
                 zCoord[k] = x.getEntry(k);
             }
         }
