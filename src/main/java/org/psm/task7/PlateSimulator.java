@@ -1,47 +1,85 @@
 package org.psm.task7;
 
+import org.apache.commons.math3.linear.*;
 import org.jfree.data.xy.DefaultXYZDataset;
 
 public class PlateSimulator {
 
-    public static SimulationResult simulate(int N, double tol) {
-        int size = N + 2;
-        double[][] T = new double[size][size];
+    public static SimulationResult simulate(int N) {
+        RealMatrix A = buildCoefficientMatrix(N);
+        RealVector b = buildRightHandSide(N);
+        RealVector x = solveSystem(A, b);
+        DefaultXYZDataset dataset = buildDatasetFromSolution(x, N);
+        return new SimulationResult(dataset);
+    }
 
-        for (int i = 0; i < size; i++) {
-            T[i][0] = 200;
-            T[i][size - 1] = 150;
-            T[0][i] = 100;
-            T[size - 1][i] = 50;
-        }
+    private static RealMatrix buildCoefficientMatrix(int N) {
+        int size = N * N;
+        RealMatrix A = new Array2DRowRealMatrix(size, size);
 
-        while (true) {
-            double maxDiff = 0;
-            for (int i = 1; i <= N; i++) {
-                for (int j = 1; j <= N; j++) {
-                    double old = T[i][j];
-                    T[i][j] = 0.25 * (T[i - 1][j] + T[i + 1][j] + T[i][j - 1] + T[i][j + 1]);
-                    maxDiff = Math.max(maxDiff, Math.abs(T[i][j] - old));
-                }
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                int k = index(i, j, N);
+                A.setEntry(k, k, -4);
+                setInteriorNeighbors(A, i, j, N, k);
             }
-            if (maxDiff < tol) break;
         }
+        return A;
+    }
 
-        double[] x = new double[N * N];
-        double[] y = new double[N * N];
-        double[] z = new double[N * N];
-        int idx = 0;
-        for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= N; j++) {
-                x[idx] = i;
-                y[idx] = j;
-                z[idx] = T[i][j];
-                idx++;
+    private static void setInteriorNeighbors(RealMatrix A, int i, int j, int N, int k) {
+        if (j > 0)     A.setEntry(k, index(i, j - 1, N), 1); // Left
+        if (j < N - 1) A.setEntry(k, index(i, j + 1, N), 1); // Right
+        if (i > 0)     A.setEntry(k, index(i - 1, j, N), 1); // Top
+        if (i < N - 1) A.setEntry(k, index(i + 1, j, N), 1); // Bottom
+    }
+
+    private static RealVector buildRightHandSide(int N) {
+        RealVector b = new ArrayRealVector(N * N);
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                int k = index(i, j, N);
+                applyBoundaryCondition(b, i, j, N, k);
+            }
+        }
+        return b;
+    }
+
+    private static void applyBoundaryCondition(RealVector b, int i, int j, int N, int k) {
+        if (j == 0)     b.addToEntry(k, -200); // Left
+        if (j == N - 1) b.addToEntry(k, -150); // Right
+        if (i == 0)     b.addToEntry(k, -100); // Top
+        if (i == N - 1) b.addToEntry(k, -50);  // Bottom
+    }
+
+    private static RealVector solveSystem(RealMatrix A, RealVector b) {
+        DecompositionSolver solver = new LUDecomposition(A).getSolver();
+        return solver.solve(b);
+    }
+
+    private static DefaultXYZDataset buildDatasetFromSolution(RealVector x, int N) {
+        int size = N * N;
+        double[] xCoord = new double[size];
+        double[] yCoord = new double[size];
+        double[] zCoord = new double[size];
+
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                int k = i * N + j;
+                xCoord[k] = i + 1;
+                yCoord[k] = j + 1;
+                zCoord[k] = x.getEntry(k);
             }
         }
 
         DefaultXYZDataset ds = new DefaultXYZDataset();
-        ds.addSeries("Temperature", new double[][]{x, y, z});
-        return new SimulationResult(ds);
+        ds.addSeries("Temperature", new double[][]{xCoord, yCoord, zCoord});
+        return ds;
+    }
+
+    // Helper
+    private static int index(int i, int j, int N) {
+        return i * N + j;
     }
 }
