@@ -22,7 +22,8 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
   conservation.
 - `task7/` – Stationary heat distribution on a square plate using the finite difference method.
   Solves a 2D Laplace equation using linear system formulation and LU decomposition to compute the temperature profile given fixed edge temperatures.
-
+- `task9/` – Fractal plant drawing using L-systems and turtle graphics.
+  Implements a recursive L-system with symbolic rewriting, visualized using turtle-like drawing logic in a Swing GUI.
 ---
 
 ## 🔍 Topics Covered
@@ -87,6 +88,15 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
   - **Temperature distribution inside the plate**
   - **Color-mapped heatmap via `JFreeChart`**  
   Fixed temperatures are applied on all four edges, and the system is solved efficiently using linear algebra tools.
+- **Task 9**:
+  Generates and visualizes a fractal plant based on an L-system (Lindenmayer system).  
+  Features:
+  - **Symbol rewriting rules** with recursive growth (e.g. `"X → F+[[X]-X]-F[-FX]+X"`)
+  - **Turtle graphics** for interpreting drawing instructions (`F, +, -, [, ]`)
+  - Branching structures via a stack to simulate natural growth
+  - Dynamic **zooming based on iteration count** to fit the drawing into view
+  - Optionally supports **step-by-step rendering** for animation-like visual evolution  
+  The simulation is rendered using Swing and Graphics2D.
 ---
 
 ## 🛠️ Requirements
