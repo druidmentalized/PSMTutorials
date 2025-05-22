@@ -50,7 +50,7 @@ public class GameOfLifeUI {
         JTextField reproductionField = new JTextField(String.valueOf(reproductionThreshold), 3);
 
         JButton applyButton = new JButton("Apply Rules");
-        applyButton.addActionListener(e -> {
+        applyButton.addActionListener(_ -> {
             try {
                 int newUnder = Integer.parseInt(underField.getText());
                 int newOver = Integer.parseInt(overField.getText());
@@ -90,7 +90,7 @@ public class GameOfLifeUI {
         JLabel[][] cells = new JLabel[GRID_SIZE][GRID_SIZE];
         boolean[][] cellsAlive = initializeGridCells(lifeGrid, cells);
 
-        startSimulationTimer(cells, cellsAlive, lifeGrid);
+        startSimulationTimer(cells, cellsAlive);
 
         lifeGridWrapper.add(lifeGrid);
         return lifeGridWrapper;
@@ -112,7 +112,8 @@ public class GameOfLifeUI {
             for (int j = 0; j < GRID_SIZE; j++) {
                 JLabel cell = new JLabel();
                 cell.setOpaque(true);
-                boolean isAlive = random.nextInt(5) == 3;
+                double initialAliveProbability = 0.30;
+                boolean isAlive = random.nextDouble() < initialAliveProbability;
                 cell.setBackground(isAlive ? aliveColor : Color.BLACK);
                 cells[i][j] = cell;
                 aliveMatrix[i][j] = isAlive;
@@ -122,7 +123,7 @@ public class GameOfLifeUI {
         return aliveMatrix;
     }
 
-    private void startSimulationTimer(JLabel[][] cells, boolean[][] cellsAlive, JPanel lifeGrid) {
+    private void startSimulationTimer(JLabel[][] cells, boolean[][] cellsAlive) {
         GameOfLifeSimulator simulator = new GameOfLifeSimulator(cellsAlive);
         Timer timer = new Timer(45, _ -> {
             simulator.makeEvolutionStep(
