@@ -86,39 +86,56 @@ public class GameOfLifeUI {
         JPanel lifeGridWrapper = new JPanel(new GridBagLayout());
         lifeGridWrapper.setBackground(Color.BLACK);
 
-        JPanel lifeGrid = new JPanel(new GridLayout(GRID_SIZE, GRID_SIZE));
-        lifeGrid.setPreferredSize(new Dimension(700, 700));
-        lifeGrid.setMinimumSize(new Dimension(700, 700));
-        lifeGrid.setMaximumSize(new Dimension(700, 700));
-        lifeGrid.setBackground(Color.BLACK);
-
+        JPanel lifeGrid = createGridPanel();
         JLabel[][] cells = new JLabel[GRID_SIZE][GRID_SIZE];
-        boolean[][] cellsAlive = new boolean[GRID_SIZE][GRID_SIZE];
+        boolean[][] cellsAlive = initializeGridCells(lifeGrid, cells);
+
+        startSimulationTimer(cells, cellsAlive, lifeGrid);
+
+        lifeGridWrapper.add(lifeGrid);
+        return lifeGridWrapper;
+    }
+
+    private JPanel createGridPanel() {
+        JPanel panel = new JPanel(new GridLayout(GRID_SIZE, GRID_SIZE));
+        panel.setPreferredSize(new Dimension(700, 700));
+        panel.setMinimumSize(new Dimension(700, 700));
+        panel.setMaximumSize(new Dimension(700, 700));
+        panel.setBackground(Color.BLACK);
+        return panel;
+    }
+
+    private boolean[][] initializeGridCells(JPanel panel, JLabel[][] cells) {
+        boolean[][] aliveMatrix = new boolean[GRID_SIZE][GRID_SIZE];
 
         for (int i = 0; i < GRID_SIZE; i++) {
             for (int j = 0; j < GRID_SIZE; j++) {
                 JLabel cell = new JLabel();
                 cell.setOpaque(true);
-                boolean alive = random.nextInt(5) == 3;
-                cell.setBackground(alive ? aliveColor : Color.BLACK);
+                boolean isAlive = random.nextInt(5) == 3;
+                cell.setBackground(isAlive ? aliveColor : Color.BLACK);
                 cells[i][j] = cell;
-                cellsAlive[i][j] = alive;
-                lifeGrid.add(cell);
+                aliveMatrix[i][j] = isAlive;
+                panel.add(cell);
             }
         }
+        return aliveMatrix;
+    }
 
+    private void startSimulationTimer(JLabel[][] cells, boolean[][] cellsAlive, JPanel lifeGrid) {
         GameOfLifeSimulator simulator = new GameOfLifeSimulator(cellsAlive);
         Timer timer = new Timer(45, _ -> {
-            simulator.makeEvolutionStep(underpopulationThreshold, overpopulationThreshold, reproductionThreshold);
+            simulator.makeEvolutionStep(
+                    underpopulationThreshold, overpopulationThreshold, reproductionThreshold
+            );
+
             for (int i = 0; i < GRID_SIZE; i++) {
                 for (int j = 0; j < GRID_SIZE; j++) {
-                    cells[i][j].setBackground(cellsAlive[i][j] ? aliveColor : Color.BLACK);
+                    Color color = cellsAlive[i][j] ? aliveColor : Color.BLACK;
+                    cells[i][j].setBackground(color);
                 }
             }
         });
         timer.start();
-
-        lifeGridWrapper.add(lifeGrid);
-        return lifeGridWrapper;
     }
 }

@@ -3,7 +3,7 @@ package org.psm.task10;
 public class GameOfLifeSimulator {
 
     private final int GRID_SIZE;
-    private boolean[][] cellsAlive;
+    private final boolean[][] cellsAlive;
 
     private final int[][] directions = new int[][]{
             {-1, -1},
