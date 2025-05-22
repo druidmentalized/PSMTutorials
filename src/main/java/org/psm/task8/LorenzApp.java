@@ -4,8 +4,6 @@ import javax.swing.*;
 
 public class LorenzApp {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new LorenzUI().createAndShowGUI();
-        });
+        SwingUtilities.invokeLater(() -> new LorenzUI().createAndShowGUI());
     }
 }

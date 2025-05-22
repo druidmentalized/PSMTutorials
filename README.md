@@ -143,6 +143,20 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
 
 ---
 
+## 🖼️ Sample Results
+
+| Task 4: Rolling Object Simulation                              | Task 5: Moon–Earth–Sun Orbits                                   |
+|----------------------------------------------------------------|-----------------------------------------------------------------|
+| ![RollingObj](src/main/resources/galleryscreenshots/task4.png) | ![Orbits](src/main/resources/galleryscreenshots/task5.png)      |
+
+| Task 7: Plate Heat Distribution                                | Task 8: Lorenz Chaos Simulation                                 |
+|----------------------------------------------------------------|-----------------------------------------------------------------|
+| ![Plate](src/main/resources/galleryscreenshots/task7.png)      | ![LorenzChaos](src/main/resources/galleryscreenshots/task8.png) |
+
+| Task 9: Fractal Plant (L-System)                               | Task 10: Game of Life                                           |
+|----------------------------------------------------------------|-----------------------------------------------------------------|
+| ![Fractal](src/main/resources/galleryscreenshots/task9.png)    | ![GoL](src/main/resources/galleryscreenshots/task10.png)        |
+
 ## 🛠️ Requirements
 
 - Java 17+ (Java 21+ supported)
