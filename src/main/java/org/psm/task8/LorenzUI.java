@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 
-public class UI {
+public class LorenzUI {
     private static final String EULER_CARD = "Euler";
     private static final String MIDPOINT_CARD = "Midpoint";
     private static final String RK4_CARD = "RK4";
@@ -47,9 +47,9 @@ public class UI {
         double dt = 0.005;
         int steps = (int) (50.0 / dt);
 
-        var eulerSeries = Simulator.simulateEuler(dt, steps);
-        var midpointSeries = Simulator.simulateMidpoint(dt, steps);
-        var rk4Series = Simulator.simulateRK4(dt, steps);
+        var eulerSeries = LorenzSimulator.simulateEuler(dt, steps);
+        var midpointSeries = LorenzSimulator.simulateMidpoint(dt, steps);
+        var rk4Series = LorenzSimulator.simulateRK4(dt, steps);
 
         ChartPanel panelEuler = createChartPanel("Euler Method", new XYSeriesCollection(eulerSeries), Color.CYAN);
         ChartPanel panelMidpoint = createChartPanel("Midpoint Method", new XYSeriesCollection(midpointSeries), Color.ORANGE);

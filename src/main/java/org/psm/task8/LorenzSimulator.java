@@ -2,7 +2,7 @@ package org.psm.task8;
 
 import org.jfree.data.xy.XYSeries;
 
-public class Simulator {
+public class LorenzSimulator {
     private static final double A = 10.0;
     private static final double B = 25.0;
     private static final double C = 8.0 / 3.0;

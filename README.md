@@ -26,6 +26,7 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
 - `task7/` – Stationary heat distribution on a square plate using the finite difference method.
   Solves a 2D Laplace equation using linear system formulation and LU decomposition to compute the temperature profile
   given fixed edge temperatures.
+- `task8/` – 3D Lorenz attractor simulation projected to 2D space using numerical solvers.
 - `task9/` – Fractal plant drawing using L-systems and turtle graphics.
   Implements a recursive L-system with symbolic rewriting, visualized using turtle-like drawing logic in a Swing GUI.
 - `task10/` - Interactive Conway’s Game of Life simulation using Swing.
@@ -97,6 +98,20 @@ Each task is located under its own package inside the `src/main/java/org/psm/` d
     - **Temperature distribution inside the plate**
     - **Color-mapped heatmap via `JFreeChart`**  
       Fixed temperatures are applied on all four edges, and the system is solved efficiently using linear algebra tools.
+- **Task 8**:
+  Simulates the Lorenz system, a classic example of deterministic chaos, by solving a system of nonlinear differential equations using three numerical methods:
+  - **Euler’s method**
+  - **Midpoint method (Improved Euler)**
+  - **Runge-Kutta 4th order (RK4)**  
+  For each method, the simulation tracks evolution of the system’s x and z variables and plots the result as a 2D projection (x vs z).  
+  Features:
+  - Interactive GUI built with `Swing` and visualized using JFreeChart
+  - A card-based UI that allows switching between:
+    - Individual charts for Euler, Midpoint, and RK4
+    - A **combined plot** to compare solver behaviors visually
+  - Real-time switching of chart panels with navigation buttons
+  - Configurable simulation parameters like time step (dt) and number of steps  
+  This task demonstrates the qualitative difference in accuracy and stability between solvers when applied to chaotic systems.
 - **Task 9**:
   Generates and visualizes a fractal plant based on an L-system (Lindenmayer system).  
   Features:
