@@ -42,7 +42,7 @@ public class GameOfLifeSimulator {
             int newX = (x + direction[0] + GRID_SIZE) % GRID_SIZE;
             int newY = (y + direction[1] + GRID_SIZE) % GRID_SIZE;
 
-            if (cellsAlive[newX][newY]) aliveAround++;
+            if (cellsAlive[newY][newX]) aliveAround++;
         }
 
         return aliveAround;
